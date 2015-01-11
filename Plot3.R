@@ -1,0 +1,18 @@
+d = read.table("household_power_consumption.txt", header=TRUE, sep=";")
+d$DateTime <- as.POSIXct(paste(d$Date, d$Time), format="%d/%m/%Y %H:%M:%S")
+d$Date <- as.Date(d$Date, "%d/%m/%Y")
+d2 <- subset(d, Date == "2007-2-1" | Date == "2007-2-2")
+
+#Plot3
+d2$Sub_metering_1<-as.character(d2$Sub_metering_1)
+d2$Sub_metering_1<-as.numeric(d2$Sub_metering_1)
+d2$Sub_metering_2<-as.character(d2$Sub_metering_2)
+d2$Sub_metering_2<-as.numeric(d2$Sub_metering_2)
+d2$Sub_metering_3<-as.character(d2$Sub_metering_3)
+d2$Sub_metering_3<-as.numeric(d2$Sub_metering_3)
+jpeg("Plot3.png",width=480,height=480)
+plot(d2$DateTime,d2$Sub_metering_1,type="l",col="Black",xlab="",ylab="Energy sub metering")
+lines(d2$DateTime,d2$Sub_metering_2,type="l",col="Red")
+lines(d2$DateTime,d2$Sub_metering_3,type="l",col="Blue")
+legend("topright",legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"),col=c("Black","Blue","Red"), lty = c(1, 1, 1), lwd=c(1,1,1))
+dev.off()
